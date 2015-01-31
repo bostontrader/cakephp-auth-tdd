@@ -1,2 +1,3 @@
-# cakephp-login
-A template for getting started with CakePHP and the ability to authenticate and authorize.
+The purpose of this repository is to provide instructions to install
+from scratch, CakePHP, and to configure it to support authentication and
+authorization.
