@@ -46,8 +46,3 @@ the end, or anywhere, and work your way through whatever parts of this baffle yo
 These steps are outside the scope of this document and there are simply way too many
 variations and nuances for me to deal with here.  Your hello-world goal at this step is to see the
 CakePHP welcome screen running from this code.
-
-
-<h2>Here we go!</h2>
-
-
