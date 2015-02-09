@@ -66,3 +66,8 @@ to illustrate some issues.  I will pick up the pace in subsequent steps.
 
 commit-e8eac7.  If we run Model/UserTest at this time, we'll get an error: No tests found in class "UserTest".  Well duh!  The beginning test doesn't contain any tests.  Let's fix that by adding a simple test that does nothing.  Although the test does nothing, it
 looks like a test and thus makes the class a valid CakeTestCase.
+
+commit- a49e85.  If we run the test now, it's all green.  Great! Onward through the fog.
+
+<br>Now we want to make a test that will do something with the model.  Again we guess that
+we'll likely want some means of getting all the User records.  So let's create a test to invoke a method getAllUsers on the User model.  We haven't yet created a users table in the db, a Users model in Cake, nor a method getAllUsers.  So we guess this test will probably fail now.
