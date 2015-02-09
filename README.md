@@ -24,7 +24,7 @@ That's what I try to explain in this repository.
 
 <h2>How to Use This Repository</h2>
 
-Starting with commit xxxx this repository supplies a beginning CakePHP 2.6 installation.
+Starting with commit e50756 this repository supplies a beginning CakePHP 2.6 installation.
 Thereafter, I have an essay, or perhaps merely a terse description, describing each subsequent baby-step
 taken in pursuit of the Goal.  In each of these steps, I'll go through the TDD dance.  That is,
 make a test, watch it fail, implement whatever is needed to make the test past.  Along the way,
@@ -37,12 +37,23 @@ the end, or anywhere, and work your way through whatever parts of this baffle yo
 
 <ol>
 <li>Clone this repository somewhere convenient for your development tools.</li>
+<li>Switch to whichever commit you want to use.  Recall that commit e50756 is the starting
+point.</li>
 <li>Configure a web-server to serve this code.</li>
 <li>Be sure to configure your web-server to support relevant tools of debuggery such as xdebug.</li>
 <li>Configure your database to work with this code.</li>
 <li>Configure your IDE to work with this source code and debug tools.</li>
+<li>Learn how to execute your tests.  Either from the web browser or command-line.
+An example for running the tests from the web browser might be...<b>http://localhost/cakephp-auth-tdd/test.php</b></li>
 </ol>
 
 These steps are outside the scope of this document and there are simply way too many
 variations and nuances for me to deal with here.  Your hello-world goal at this step is to see the
 CakePHP welcome screen running from this code.
+
+<h2>Here we go!</h2>
+
+<h3>1. Ignore the PagesController</h3>
+
+The PagesController comes with CakePHP and has presumably already been tested.  So let's not
+waste our effort testing that.
