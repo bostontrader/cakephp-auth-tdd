@@ -8,5 +8,8 @@ class UserTest extends CakeTestCase {
 		$this->User = ClassRegistry::init('User');
 	}
 
+	// This method does nothing, but it looks like a test and thus
+	// this class is now a valid CakeTestCase.
+	public function test() {}
 }
 ?>

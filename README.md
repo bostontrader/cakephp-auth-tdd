@@ -64,3 +64,5 @@ It's not hard to guess that we're going to need a table to store the user inform
 start testing in that direction.  Note: I'm going to go through this step in tedious detail
 to illustrate some issues.  I will pick up the pace in subsequent steps.
 
+commit-e8eac7.  If we run Model/UserTest at this time, we'll get an error: No tests found in class "UserTest".  Well duh!  The beginning test doesn't contain any tests.  Let's fix that by adding a simple test that does nothing.  Although the test does nothing, it
+looks like a test and thus makes the class a valid CakeTestCase.
