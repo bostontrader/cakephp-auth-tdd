@@ -57,3 +57,10 @@ CakePHP welcome screen running from this code.
 
 The PagesController comes with CakePHP and has presumably already been tested.  So let's not
 waste our effort testing that.
+
+<h3>2. The User model</h3>
+
+It's not hard to guess that we're going to need a table to store the user information.  So let's
+start testing in that direction.  Note: I'm going to go through this step in tedious detail
+to illustrate some issues.  I will pick up the pace in subsequent steps.
+
