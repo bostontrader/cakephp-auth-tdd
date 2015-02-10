@@ -116,3 +116,8 @@ Please see the source code for this.
 <b>commit- 80dc1e.</b>  When we run the test now, it fails because "Model User cannot be found".
 
 That's an easy one.  Let's create the User model.
+
+<b>commit- 86fcd0.</b>  When we run the test now, it fails because it can't find 
+the getAllUsers method of the model.
+
+Let's create said method.

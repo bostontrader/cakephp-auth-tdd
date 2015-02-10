@@ -1,3 +1,5 @@
 <?php
-class User extends AppModel {}
+class User extends AppModel {
+	public function getAllUsers() {}
+}
 ?>
