@@ -1,6 +1,7 @@
-<h1>The purpose of this repository is to assemble some useful
+<h1>Introduction</h1>
+The purpose of this repository is to assemble some useful
 techniques into a starter installation of CakePHP.  Said techniques
-include:</h1>
+include:
 
 <ul>
 <li>The implementation of the blog tutorial from the CakePHP Cookbook.</li>
@@ -32,6 +33,20 @@ I'll explain whatever needs explaining.
 
 Given the magic of git, it's easy to back and forth to whatever version you want.  You can start at the beginning, 
 the end, or anywhere, and work your way through whatever parts of this baffle you. 
+
+<h2>Acknowledgements</h2>
+I'd like to thank the following for their contributions of code samples, advice, or inspiration:
+<ul>
+<li>http://zenofcoding.com/2012/05/09/user-auth-with-cakephp-2-1-part-1/</li>
+<li>http://zenofcoding.com/2012/07/04/building-the-blog-tutorial-the-tdd-way-part-1-model-testing/</li>
+<li>http://mark-story.com/posts/view/testing-cakephp-controllers-the-hard-way</li>
+<li>http://stackoverflow.com/questions/18225327/unit-testing-the-auth-component</li>
+<li>http://stackoverflow.com/questions/16448178/cakephp-controller-testing-mocking-the-auth-component</li>
+<li>http://stackoverflow.com/questions/15750135/cakephp-2-3-unit-testing-user-login</li>
+<li>http://stackoverflow.com/questions/8216434/write-unit-test-for-a-controller-that-uses-authcomponent-in-cakephp-2</li>
+<li>http://stackoverflow.com/questions/10578598/why-isauthorized-is-never-called-when-running-controller-tests</li>
+<li>The giants upon whose shoulders I generally am privileged to stand upon.</li>
+</ul>
 
 <h2>Getting Started</h2>
 
@@ -69,5 +84,32 @@ looks like a test and thus makes the class a valid CakeTestCase.
 
 commit- a49e85.  If we run the test now, it's all green.  Great! Onward through the fog.
 
-<br>Now we want to make a test that will do something with the model.  Again we guess that
+Now we want to make a test that will do something with the model.  Again we guess that
 we'll likely want some means of getting all the User records.  So let's create a test to invoke a method getAllUsers on the User model.  We haven't yet created a users table in the db, a Users model in Cake, nor a method getAllUsers.  So we guess this test will probably fail now.
+
+commit- f2cfb3.  When we run the test now, it fails because "Table users for model User was not found in datasource test".
+
+The immediate cause of this is that we have no users table in the "test" db. Recall that Config/database.php
+has various datasources configured in it.  The most common configuration is named "default" and is what Cake uses by default.  The next configuration is named "test".
+
+We now want to create the simplest possible users table in the db.  But which db?  Well... we'll want it in
+the default db for obvious reasons.  But we'll also want it in the test db as well.  But testing
+will routinely drop all the tables and rebuild them from scratch, as necessary and directed.  These amazing
+facts lead us to "fixtures."  With fixtures we can provide the schema for the various tables, as well as 
+some initial data to populate said tables.
+
+However, if we describe the table schema in a fixture, we'll also have to eventually duplicate this schema
+in the default db.  Keeping these two things in sync is a nuisance.  Fortunately we can have a fixture get
+it's schema from the real db.  This will prove useful so that's what I'll do.
+
+The first step in doing that is to create our table in the default db.  Perhaps like this...
+
+```
+CREATE  TABLE `cakephp-auth-tdd`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  PRIMARY KEY (`id`) );
+```
+
+Next, create a fixture that references the default db and include that fixture in the test.
+Please see the source code for this.
+
