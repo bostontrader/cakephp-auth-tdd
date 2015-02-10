@@ -79,15 +79,15 @@ It's not hard to guess that we're going to need a table to store the user inform
 start testing in that direction.  Note: I'm going to go through this step in tedious detail
 to illustrate some issues.  I will pick up the pace in subsequent steps.
 
-commit-e8eac7.  If we run Model/UserTest at this time, we'll get an error: No tests found in class "UserTest".  Well duh!  The beginning test doesn't contain any tests.  Let's fix that by adding a simple test that does nothing.  Although the test does nothing, it
+<b>commit-e8eac7.</b>  If we run Model/UserTest at this time, we'll get an error: No tests found in class "UserTest".  Well duh!  The beginning test doesn't contain any tests.  Let's fix that by adding a simple test that does nothing.  Although the test does nothing, it
 looks like a test and thus makes the class a valid CakeTestCase.
 
-commit- a49e85.  If we run the test now, it's all green.  Great! Onward through the fog.
+<b>commit- a49e85.</b>  If we run the test now, it's all green.  Great! Onward through the fog.
 
 Now we want to make a test that will do something with the model.  Again we guess that
 we'll likely want some means of getting all the User records.  So let's create a test to invoke a method getAllUsers on the User model.  We haven't yet created a users table in the db, a Users model in Cake, nor a method getAllUsers.  So we guess this test will probably fail now.
 
-commit- f2cfb3.  When we run the test now, it fails because "Table users for model User was not found in datasource test".
+<b>commit- f2cfb3.</b>  When we run the test now, it fails because "Table users for model User was not found in datasource test".
 
 The immediate cause of this is that we have no users table in the "test" db. Recall that Config/database.php
 has various datasources configured in it.  The most common configuration is named "default" and is what Cake uses by default.  The next configuration is named "test".
@@ -113,3 +113,6 @@ CREATE  TABLE `cakephp-auth-tdd`.`users` (
 Next, create a fixture that references the default db and include that fixture in the test.
 Please see the source code for this.
 
+<b>commit- 80dc1e.</b>  When we run the test now, it fails because "Model User cannot be found".
+
+That's an easy one.  Let's create the User model.
