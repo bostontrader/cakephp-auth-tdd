@@ -138,7 +138,7 @@ If you've been watching closely, I've already waved away a few bits of boiler co
 let our tests fail in their absence first.  In real-life we must balance the TDD theory with just get-it-done.
 Moving forward, we'll frequently see this issue.
 
-<b>commit- 842be6.</b>  When we run the test now, all is green!  And this is how it should be.
+<b>commit- 5ed6f3.</b>  When we run the test now, all is green!  And this is how it should be.
 
 Despite my irrational exuberance about doing things ahead of testing in the prior step, I did restrain
 myself a bit.  If you look at the code now, you'll see that all of it conspires to support
