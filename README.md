@@ -124,7 +124,39 @@ Let's create said method.
 
 <b>commit- 842be6.</b>  When we run the test now, all is green!
 
-The basic model testing is in place.  We have a users table in the default db,
+The basic model testing is now in place.  We have a users table in the default db,
 a fixture that refers to it, a User model, a test for that model, and finally a test that calls the getAllUsers method.  Said method doesn't presently return anything, so let's fix
-that.  Let modify the fixture to provide some data, the method to return the data,
-and the test to compare what it received with what it expected.
+that.
+
+At this point, theory bumps into reality.  The TDD purest would say "first build the test and watch it fail."  
+We could do that.  And then watch as the test fails again on the next obvious stumbling block.  We could do this
+several times as we work our way through the discovery that we need to modify the fixture to populate
+the test db with data, as well as to modify the method to return the data.  This is too tedious so
+in this step I'll combine all of that, saving us some time.
+
+If you've been watching closely, I've already waved away a few bits of boiler code w/o bothering to
+let our tests fail in their absence first.  In real-life we must balance the TDD theory with just get-it-done.
+Moving forward, we'll frequently see this issue.
+
+<b>commit- 842be6.</b>  When we run the test now, all is green!  And this is how it should be.
+
+Despite my irrational exuberance about doing things ahead of testing in the prior step, I did restrain
+myself a bit.  If you look at the code now, you'll see that all of it conspires to support
+merely a single field, id, in the User table.  I _could_ have earlier guessed at other fields it might
+need in the future, but this is where it's easy to get carried away with adding lots of stuff.
+We'll add these other fields when and if we ever need them.  Speaking of...
+
+How about we live dangerously now and guess that <b>username, password, is_active,</b> and <b>is_admin</b>
+Are reasonably likely to be useful and throw them in now.  As usual, our first order of business will
+be to add a test that depends upon their existence.  In this case, we'll modify our single test
+and then work our way through the resulting errors until we get to green again.
+
+We'll have to modify our users table in the default db, perhaps thus...
+
+```
+ALTER TABLE `cakephp-auth-tdd`.`users` 
+  ADD COLUMN `username` VARCHAR(255) NULL DEFAULT NULL  AFTER `id` , 
+  ADD COLUMN `password` VARCHAR(255) NULL DEFAULT NULL  AFTER `username` , 
+  ADD COLUMN `is_active` TINYINT(1) NULL DEFAULT 0  AFTER `password` , 
+  ADD COLUMN `is_admin` TINYINT(1) NULL DEFAULT 0  AFTER `is_active` ;
+```
