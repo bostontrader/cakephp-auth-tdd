@@ -121,3 +121,10 @@ That's an easy one.  Let's create the User model.
 the getAllUsers method of the model.
 
 Let's create said method.
+
+<b>commit- 842be6.</b>  When we run the test now, all is green!
+
+The basic model testing is in place.  We have a users table in the default db,
+a fixture that refers to it, a User model, a test for that model, and finally a test that calls the getAllUsers method.  Said method doesn't presently return anything, so let's fix
+that.  Let modify the fixture to provide some data, the method to return the data,
+and the test to compare what it received with what it expected.

@@ -11,6 +11,14 @@ class UserTest extends CakeTestCase {
 
 	public function testGetAllUsers() {
 		$result = $this->User->getAllUsers();
+		$expected = array(
+				array('User' => array('id'=>1)),
+				array('User' => array('id'=>2)),
+				array('User' => array('id'=>3)),
+				array('User' => array('id'=>4))
+		);
+
+		$this->assertEquals($expected, $result);
 	}
 }
 ?>
