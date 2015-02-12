@@ -160,3 +160,13 @@ ALTER TABLE `cakephp-auth-tdd`.`users`
   ADD COLUMN `is_active` TINYINT(1) NULL DEFAULT 0  AFTER `password` , 
   ADD COLUMN `is_admin` TINYINT(1) NULL DEFAULT 0  AFTER `is_active` ;
 ```
+
+<h3>3. The UsersController</h3>
+
+Starting with <b>commit eb9a69</b> we implement step 3-1.  It's time to start in on the UsersController.  As we did with
+the User model, we <i>could</i> pick this apart, tedious-step-by-tedious-step.  But now you we
+have some experience and judgement, let's pick up the pace.
+
+We start with the shell of a UsersControllerTest, which extends ControllerTestCase.  It doesn't
+take long to discover that we need a UsersController, we need an index method, and said
+method needs to invoke getAllUsers on the User model.
