@@ -170,3 +170,22 @@ have some experience and judgement, let's pick up the pace.
 We start with the shell of a UsersControllerTest, which extends ControllerTestCase.  It doesn't
 take long to discover that we need a UsersController, we need an index method, and said
 method needs to invoke getAllUsers on the User model.
+
+Starting with <b>commit 85228e</b> we implement step 3-2.  Now let's take a closer
+look at our budding test. The first test was named <b>testIndex</b>. We might want to test that 
+browsing to <b>/users</b> will by default invoke the <b>index</b> method on the <b>UsersController</b>.
+
+But wait... I don't think so.  That's CakePHP's functionality and/or a matter of routing configuration.
+Perhaps that should be tested elsewhere.  What I care about now is whether or not the <b>UsersController->index</b> 
+method functions correctly, regardless of how it's invoked.
+
+Now I make minimum modifications to get anything to render.  No need to fecth any data yet,
+just get something simple to render.  The test invokes <b>testAction</b> and then... how do we 
+conclude that the action was successful?  As you may know by now, there are several types of results
+that <b>testAction</b> can return, depending upon the setting (or existence of) the <b>return</b> 
+parameter when invoked.  In this case, I think we should specify <b>'return' => 'view'</b>.  
+This will cause only the generated view to be returned, without any enclosing layout.  If we get a view, 
+then we can conclude this test was successful.
+
+As we work our way through TDD, we'll discover that we need to create a new folder <b>/Views/Users</b> and a
+new file therein named <b>index.ctp</b>.
