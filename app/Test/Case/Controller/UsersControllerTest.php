@@ -5,8 +5,6 @@ class UsersControllerTest extends ControllerTestCase {
 
 	public function testIndex() {
 		$result = $this->testAction('/users/index', array('return' => 'view'));
-		$this->assertNotEquals($result, null);
-	}
-
+		$this->assertRegExp('/<table/', $result);	}
 }
 ?>

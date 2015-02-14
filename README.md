@@ -189,3 +189,48 @@ then we can conclude this test was successful.
 
 As we work our way through TDD, we'll discover that we need to create a new folder <b>/Views/Users</b> and a
 new file therein named <b>index.ctp</b>.
+
+Starting with <b>commit c807d6</b> we implement step 3-3. One of the big headaches in testing
+is learning to understand and deal with the various levels and limits of testing that people talk about.
+For example, right now we're doing "unit testing" of models and controllers.  Unit testing is supposed to
+be confined to small and narrow pieces of code.  Such as the individual methods of a controller.  But
+But it's certainly not the same as integration testing, which watches to see how several
+pieces work together.
+
+In testing our controller, I come to the conclusion that there's really not much more to test at this
+point, within the bounds of unit-testing.  After all, the controller method is invoked and in so doing
+seems to cause a view to be produced.  This in itself smells like some integration testing, but I'll
+ignore that.
+
+The heart of our controller testing is the testAction method.  This method can be configured to
+return four possibly interesting things about the results of invoking a controller method.
+They are result, vars, view, and content.  Is there anything about these that are particularly
+useful at this point?
+
+Result is whatever the controller explicitly returns.  This will be useful if we actually
+sending back results, such as JSON, or dealing with redirects.  At this time, it's not useful.
+
+Vars is whatever vars were "set" before the view was rendered.  This doesn't sound very useful,
+except to possibly test CakePHP functionality itself.  If we set some vars, we expect Cake will 
+do its job and deliver them.  How is that useful to us now?
+
+View is the most promising.  This let's us see the actual view that was rendered, minus the
+layout.  However, picking
+this apart is not the job of the controller's unit testing.  Nevertheless, we may want to 
+take a closer look at this shortly.
+
+Content is the entire page that was rendered, layout plus view.  Whatever the rest of the layout looks
+like is certainly far afield of controller unit testing, and we already have the view, so this
+doesn't look very useful.
+
+That's all fine and dandy you say, but you still have software to build?  We can agonize over these
+principals forever but we still have to make some code.  How shall we find some practical usage?
+
+I say we live dangerously and color outside the lines.  The fact is, we _can_ pick apart a view
+using our controller unit test and this is good enough for now.  It's better to keep moving using
+theortically defective methods than to grind to a halt in search of perfection.  When and if
+your project gets so big and complex that our simple methods fail to scale, then you'll have
+to do some re-thinking then.  Until then, let's keep it simple.
+
+So, let's modify the test to examine the view for a table element.  The table won't have anything in it
+but it's a humble beginning.
