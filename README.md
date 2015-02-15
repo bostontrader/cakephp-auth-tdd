@@ -259,3 +259,33 @@ So if we need to find a table that contains a known quantity of rows, that's not
 In keeping this simple, I've chosen to put the
 **simple\_html_dom** file in the same directory that the UsersController test is in.  Doing
 so make using require_once so much easier and until such time as other code needs access, if ever, this is good enough.
+
+Starting with **commit 512dd6** we implement **step 3-5.**
+
+The test at this point only counts the rows of an unspecified table.  Which table?  Probably the first table it finds.
+This test is a bit fragile.  If we ever add another table, then the test will probably fail. 
+If we ever add new rows, such as for headers, then the test will fail.  
+
+The Cake documentation
+itself warns against picking apart views as part of testing.  It suggests integration testing using
+tools such as Selenium WebDriver.  Nevertheless, examining the resulting view is an excellent method
+of determining if the controller is working as expected.  So I think there's a happy medium to be had.
+
+That said, let's modify the test and view so that:
+
+* The <table> is tagged as id=users
+* The <table> has a <tbody> section
+* The test only counts the rows in the <tbody> section
+
+
+Starting with **commit 07c475** we implement **step 3-6.**
+
+Now I want to modify the test and view so that:
+
+* The <table> has a <thead> section
+* The single <tr> in the <thead> section contains <td> elements for the id and username columns
+* The rows in the <tbody> section contain <td> elements for the id and username, which match what was feed to it from the fixture.
+
+I had to modify the source for **simple\_html_dom** because of a bizarre error that I was getting.
+For some reason it was ignoring <tbody> elements.  I commented out a single line of code and the
+test passes now.
