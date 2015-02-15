@@ -1,7 +1,9 @@
 <table id='users'>
-	<?php
-		foreach ($users as $user):
-			echo "<tr></tr>";
-		endforeach;
-	?>
+	<tbody>
+		<?php
+			foreach ($users as $user):
+				echo "<tr></tr>";
+			endforeach;
+		?>
+	</tbody>
 </table>
