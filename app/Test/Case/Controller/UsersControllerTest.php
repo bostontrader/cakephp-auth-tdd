@@ -48,5 +48,28 @@ class UsersControllerTest extends ControllerTestCase {
 		}
 
 	}
+
+	public function testView() {
+		// This test will look for a user with an id=1.  The ids
+		// are assigned using an autoincrement field that starts with 1.
+		// The array of user fixture records use zero-based indexing.
+		// Therefore the id number will be 1 higher than the index for
+		// the corresponding record in the array of user fixture records.
+		$result = $this->testAction('/users/view/1', array('return' => 'view'));
+		$userFixture = new UserFixture();
+		$fixtureRecord = $userFixture->records[0];
+		$html = str_get_html($result);
+
+		$p = $html->find('p[id=id]');
+		$this->assertEqual($fixtureRecord['id'], $p[0]->plaintext);
+
+		$p = $html->find('p[id=username]');
+		$this->assertEqual($fixtureRecord['username'], $p[0]->plaintext);
+
+		$p = $html->find('p[id=is_active]');
+		$this->assertEqual($fixtureRecord['is_active'], $p[0]->plaintext);
+
+		$p = $html->find('p[id=is_admin]');
+		$this->assertEqual($fixtureRecord['is_admin'], $p[0]->plaintext);}
 }
 ?>

@@ -297,3 +297,18 @@ Now it's time for a pop-quiz.  Let's modify whatever needs modifying to add the 
 fields.  
 
 In doing so we discover another bizarre error.  For whatever reason, when attempting to display a 0 in any of these fields, the view will only render a space instead.  Why?  Why not.  Just hack it a be done with it.
+
+
+Starting with **commit 2cc420** we implement **step 3-8.**
+
+The astute observer will have noticed that I skipped the password field.  I'll return to that shortly, but for now I think we've beaten the **index** horse enough so next I want to flesh out the other methods (add, edit, view, and delete).  In this step, let's look at the **view** method.
+
+Now that we know how to do the TDD dance, it's pretty easy to discover that we need:
+
+* A **view** method in the **UsersController**
+* A test in **UsersControllerTest**
+* A view named **/View/Users/view.ctp**
+ 
+In this first draft, I only want to test the correct operation of all this.  I don't want to try to confuse anything by POSTing to it, or GETing without a valid $id or anything like that.
+
+One nettlesome wrinkle I discovered in this step is that the ids are assigned using an auto-increment field that starts with 1, but the array of user fixture records use zero-based indexing.  Therefore the id number used by the view URL will be 1 higher than the index for the corresponding record in the array of user fixture records.

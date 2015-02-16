@@ -6,5 +6,8 @@ class UsersController extends AppController {
 		$this->set('users', $this->User->getAllUsers());
 	}
 
+	public function view($id = null) {
+		$this->set('user', $this->User->findById($id));
+	}
 }
 ?>
