@@ -289,3 +289,11 @@ Now I want to modify the test and view so that:
 I had to modify the source for **simple\_html_dom** because of a bizarre error that I was getting.
 For some reason it was ignoring <tbody> elements.  I commented out a single line of code and the
 test passes now.
+
+
+Starting with **commit 3e5898** we implement **step 3-7.**
+
+Now it's time for a pop-quiz.  Let's modify whatever needs modifying to add the **is_active** and **is_admin**
+fields.  
+
+In doing so we discover another bizarre error.  For whatever reason, when attempting to display a 0 in any of these fields, the view will only render a space instead.  Why?  Why not.  Just hack it a be done with it.

@@ -17,10 +17,12 @@ class UsersControllerTest extends ControllerTestCase {
 		$this->assertEqual($row_cnt, 1);
 
 		// 2. Ensure that the thead section has a heading
-		//    for id and username.
+		//    for id, username, is_active, and is_admin.
 		$columns = $rows[0]->find('td');
 		$this->assertEqual($columns[0]->plaintext, 'id');
 		$this->assertEqual($columns[1]->plaintext, 'username');
+		$this->assertEqual($columns[2]->plaintext, 'is_active');
+		$this->assertEqual($columns[3]->plaintext, 'is_admin');
 
 		// 3. Ensure that the tbody section has the same
 		//    quantity of rows as the count of user records in the fixture.
@@ -39,8 +41,10 @@ class UsersControllerTest extends ControllerTestCase {
 			$htmlRow = $values[1];
 			$htmlColumns = $htmlRow->find('td');
 
-			$this->assertEqual($fixtureRecord['id'],       $htmlColumns[0]->plaintext);
-			$this->assertEqual($fixtureRecord['username'], $htmlColumns[1]->plaintext);
+			$this->assertEqual($fixtureRecord['id'],        $htmlColumns[0]->plaintext);
+			$this->assertEqual($fixtureRecord['username'],  $htmlColumns[1]->plaintext);
+			$this->assertEqual($fixtureRecord['is_active'], $htmlColumns[2]->plaintext);
+			$this->assertEqual($fixtureRecord['is_admin'],  $htmlColumns[3]->plaintext);
 		}
 
 	}
