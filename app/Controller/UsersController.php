@@ -12,11 +12,15 @@ class UsersController extends AppController {
 	}
 
 	public function index() {
-		$this->set('users', $this->User->getAllUsers());
+		if ($this->request->is(array('GET'))) {
+			$this->set('users', $this->User->getAllUsers());
+		}
 	}
 
 	public function view($id = null) {
-		$this->set('user', $this->User->findById($id));
+		if ($this->request->is(array('GET'))) {
+			$this->set('user', $this->User->findById($id));
+		}
 	}
 }
 ?>

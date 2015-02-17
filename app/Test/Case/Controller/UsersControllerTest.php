@@ -54,7 +54,7 @@ class UsersControllerTest extends ControllerTestCase {
 	}
 
 	public function testIndex() {
-		$result = $this->testAction('/users/index', array('return' => 'view'));
+		$result = $this->testAction('/users/index', array('return' => 'view', 'method' => 'GET'));
 		$html = str_get_html($result);
 
 		// 1. Ensure that the single row of the thead section
@@ -102,7 +102,7 @@ class UsersControllerTest extends ControllerTestCase {
 		// The array of user fixture records use zero-based indexing.
 		// Therefore the id number will be 1 higher than the index for
 		// the corresponding record in the array of user fixture records.
-		$result = $this->testAction('/users/view/1', array('return' => 'view'));
+		$result = $this->testAction('/users/view/1', array('return' => 'view', 'method' => 'GET'));
 		$userFixture = new UserFixture();
 		$fixtureRecord = $userFixture->records[0];
 		$html = str_get_html($result);

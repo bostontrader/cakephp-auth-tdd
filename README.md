@@ -339,3 +339,8 @@ The conventional edit/update cycle with Cake is to first issue a **GET** request
 As usual, we'll implement the easiest part first.  In the test, I will invent a new **User** record to replace an existing record, invoke the **POST** request, read the record that was just updated, and compare to what we just wrote.  There will be no errors, no flash messages, or redirection to deal with at this time.
 
 One wrinkle I encountered in this test is that by default, the **testAction** method sends **POST** requests.  Well duh!  RTFM.  I had noticed this earlier, but finally "discovered" it as I implemented this test, only to watch as **testEditGET** failed.  I thus had to also make suitable repairs in this step.
+
+
+Starting with **commit 63a855** we implement **step 3-11.**
+
+In this step I've modified the existing index and and view tests to explicitly send a GET, watched them fail, and then made suitable repairs to the controller so the tests pass.  I think it's fairly important to lock-down the controller methods a bit, so that they only respond to very specific http verbs.
