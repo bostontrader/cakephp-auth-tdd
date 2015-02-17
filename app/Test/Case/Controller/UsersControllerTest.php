@@ -6,6 +6,36 @@ class UsersControllerTest extends ControllerTestCase {
 
 	public $fixtures = array('app.user');
 
+	public function testEditGET() {
+
+		$result = $this->testAction('/users/edit/1', array('return' => 'view'));
+		$html = str_get_html($result);
+		$userFixture = new UserFixture();
+		$fixtureRecord = $userFixture->records[0];
+
+		$form = $html->find('form[id=UserEditForm]')[0];
+
+		// Omit the id field
+
+		// Ensure that there's a field, labled Username, that contains the correct value
+		$label = $form->find('label[for=UserUsername]')[0];
+		$input = $form->find('input[id=UserUsername]')[0];
+		$this->assertEqual($label->plaintext, "Username");
+		$this->assertEqual($input->value, $fixtureRecord['username']);
+
+		// Ensure that there's a field, labled 'Is active', that is set to the correct value
+		$label = $form->find('label[for=UserIsActive]')[0];
+		$input = $form->find('input[id=UserIsActive]')[0];
+		$this->assertEqual($label->plaintext, "Is Active");
+		$this->assertEqual($input->checked, ($fixtureRecord['is_active']?"checked":false) );
+
+		// Ensure that there's a field, labled 'Is admin', that is set to the correct value
+		$label = $form->find('label[for=UserIsAdmin]')[0];
+		$input = $form->find('input[id=UserIsAdmin]')[0];
+		$this->assertEqual($label->plaintext, "Is Admin");
+		$this->assertEqual($input->checked, ($fixtureRecord['is_admin']?"checked":false));
+	}
+
 	public function testIndex() {
 		$result = $this->testAction('/users/index', array('return' => 'view'));
 		$html = str_get_html($result);

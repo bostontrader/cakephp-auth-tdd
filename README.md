@@ -308,7 +308,25 @@ Now that we know how to do the TDD dance, it's pretty easy to discover that we n
 * A **view** method in the **UsersController**
 * A test in **UsersControllerTest**
 * A view named **/View/Users/view.ctp**
- 
+
+
 In this first draft, I only want to test the correct operation of all this.  I don't want to try to confuse anything by POSTing to it, or GETing without a valid $id or anything like that.
 
 One nettlesome wrinkle I discovered in this step is that the ids are assigned using an auto-increment field that starts with 1, but the array of user fixture records use zero-based indexing.  Therefore the id number used by the view URL will be 1 higher than the index for the corresponding record in the array of user fixture records.
+
+
+Starting with **commit 25cc61** we implement **step 3-9.**
+
+Now let's do start in on the **edit** method.  Actually, we're going to have to dissect this a bit.  The **edit** method is usefully dealt with by using it in one of ways. If we send a **GET** request with an **id**, we'll receive a response with a <form> containing some suitable input fields.  If we **POST** a request then the presently existing **User** record will be updated by Cake with the information from the request.  The testing for these two modes are substantially different so I create one test for each.  In this step we'll implement **testEditGET**.
+
+I encourage you to compare the **edit** and **view** controller methods at this time.  Notice how they differ.  Ordinarily, if we want to send variables to a view, we use the **set** command.  However, since we're using the **FormHelper** in the **edit** view, the helper expects to receive its data via setting **$this->request->data** instead.
+
+In the test, we'll return the generated view and parse it using **simple\_html_dom** again.  We then look for an aptly named <form>, as well as <label>s for the <input> fields, as well as their expected values.  
+
+Notice that we had to jump through some hoops to deal with the **is_active** and **is_admin** fields.  Cake in its wisdom decided that these should be <input> fields of type=checkbox.  Not that I disagree, but consider how we have to compare a 0 or 1 from the db to false or "checked" as teased out of the input checkbox.
+
+Also notice that I've omitted the **id** and **password** fields.  
+
+The **id** field is special and we cannot change it.  In fact, we shouldn't even care what it is.  So it's ok to omit it, especially at this time.
+
+And as mentioned earlier, the **password** field presents some new headaches, so I'll set it aside for now as well.
