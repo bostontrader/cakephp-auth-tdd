@@ -330,3 +330,12 @@ Also notice that I've omitted the **id** and **password** fields.
 The **id** field is special and we cannot change it.  In fact, we shouldn't even care what it is.  So it's ok to omit it, especially at this time.
 
 And as mentioned earlier, the **password** field presents some new headaches, so I'll set it aside for now as well.
+
+
+Starting with **commit 4ffa82** we implement **step 3-10.**
+
+The conventional edit/update cycle with Cake is to first issue a **GET** request to the **edit** method of the controller, in order to build an entry <form> populated with the existing data.  Next, make whatever mods you want, and then Submit the form.  Said submission generates a **POST** request to the same **edit** method of the controller.  The controller must necessarily determine which type of request it is dealing with and behave accordingly.  In the prior step we implemented **testEditGET**. In this step we'll implement **testEditPOST**.
+
+As usual, we'll implement the easiest part first.  In the test, I will invent a new **User** record to replace an existing record, invoke the **POST** request, read the record that was just updated, and compare to what we just wrote.  There will be no errors, no flash messages, or redirection to deal with at this time.
+
+One wrinkle I encountered in this test is that by default, the **testAction** method sends **POST** requests.  Well duh!  RTFM.  I had noticed this earlier, but finally "discovered" it as I implemented this test, only to watch as **testEditGET** failed.  I thus had to also make suitable repairs in this step.

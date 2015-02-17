@@ -8,7 +8,7 @@ class UsersControllerTest extends ControllerTestCase {
 
 	public function testEditGET() {
 
-		$result = $this->testAction('/users/edit/1', array('return' => 'view'));
+		$result = $this->testAction('/users/edit/1', array('return' => 'view', 'method' => 'GET'));
 		$html = str_get_html($result);
 		$userFixture = new UserFixture();
 		$fixtureRecord = $userFixture->records[0];
@@ -34,6 +34,23 @@ class UsersControllerTest extends ControllerTestCase {
 		$input = $form->find('input[id=UserIsAdmin]')[0];
 		$this->assertEqual($label->plaintext, "Is Admin");
 		$this->assertEqual($input->checked, ($fixtureRecord['is_admin']?"checked":false));
+	}
+
+	public function testEditPOST() {
+
+		$data = array(
+			'User' => array(
+				'id' => 1,
+				'username' => 'hendrix',
+				'is_active' => 1,
+				'is_admin' => 1
+			)
+		);
+		$result = $this->testAction('/users/edit/1', array('data' => $data, 'method' => 'POST'));
+		$changedRecord = $this->controller->User->findById(1);
+		$this->assertEqual($data['User']['username'],  $changedRecord['User']['username']);
+		$this->assertEqual($data['User']['is_active'], $changedRecord['User']['is_active']);
+		$this->assertEqual($data['User']['is_admin'],  $changedRecord['User']['is_admin']);
 	}
 
 	public function testIndex() {
