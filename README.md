@@ -379,6 +379,18 @@ This will work.  A minor drawback is that inspection of the web traffic will sho
 
 
 For more insight into this issue see [this article on stackoverflow](http://stackoverflow.com/questions/165779/are-the-put-delete-head-etc-methods-available-in-most-web-browsers).
+
  
+Starting with **commit 4b2397** we implement **step 3-13.**
+
+That last step was a lot of work!  Let's do an easy one now.  Let's start implementing the **add** method.  This is will be very similar to the **edit** method.
+
+With **add**, we submit a **GET** request in order to retrieve an entry form, and then submit the form using a **POST** request.  In this case, **POST** is the appropriate http verb and this all works just fine.  So let's first create the **addGET** test.
+
+Recall that with the **editGET** test, we looked for particular entry fields on the form and compared their values to what we expected.  In this case we'll do the same, but compare to "nothing".  This means text = "" and checkboxes are all false.
+
+As usual there will be no errors, exceptions, validations, or flash-messages to fool with, at this time.
+
+
 
  

@@ -2,6 +2,9 @@
 App::uses('AppController', 'Controller');
 class UsersController extends AppController {
 
+	public function add() {
+	}
+
 	public function edit($id = null) {
 		if ($this->request->is(array('PUT'))) {
 			$this->User->id = $id;

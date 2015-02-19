@@ -6,6 +6,33 @@ class UsersControllerTest extends ControllerTestCase {
 
 	public $fixtures = array('app.user');
 
+	public function testAddGET() {
+
+		$result = $this->testAction('/users/add', array('return' => 'view', 'method' => 'GET'));
+		$html = str_get_html($result);
+		$form = $html->find('form[id=UserAddForm]')[0];
+	
+		// Omit the id field
+
+		// Ensure that there's a field, labled Username, that is empty
+		$label = $form->find('label[for=UserUsername]')[0];
+		$input = $form->find('input[id=UserUsername]')[0];
+		$this->assertEqual($label->plaintext, "Username");
+		$this->assertEqual($input->value, "");
+	
+		// Ensure that there's a field, labled 'Is active', that is set to the correct value
+		$label = $form->find('label[for=UserIsActive]')[0];
+		$input = $form->find('input[id=UserIsActive]')[0];
+		$this->assertEqual($label->plaintext, "Is Active");
+		$this->assertEqual($input->checked, false);
+	
+		// Ensure that there's a field, labled 'Is admin', that is set to the correct value
+		$label = $form->find('label[for=UserIsAdmin]')[0];
+		$input = $form->find('input[id=UserIsAdmin]')[0];
+		$this->assertEqual($label->plaintext, "Is Admin");
+		$this->assertEqual($input->checked, false);
+	}
+
 	public function testEditGET() {
 
 		$result = $this->testAction('/users/edit/1', array('return' => 'view', 'method' => 'GET'));
