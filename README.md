@@ -45,6 +45,7 @@ I'd like to thank the following for their contributions of code samples, advice,
 <li>http://stackoverflow.com/questions/15750135/cakephp-2-3-unit-testing-user-login</li>
 <li>http://stackoverflow.com/questions/8216434/write-unit-test-for-a-controller-that-uses-authcomponent-in-cakephp-2</li>
 <li>http://stackoverflow.com/questions/10578598/why-isauthorized-is-never-called-when-running-controller-tests</li>
+<li>http://stackoverflow.com/questions/165779/are-the-put-delete-head-etc-methods-available-in-most-web-browsers<li>
 <li>The giants upon whose shoulders I generally am privileged to stand upon.</li>
 </ul>
 
@@ -344,3 +345,40 @@ One wrinkle I encountered in this test is that by default, the **testAction** me
 Starting with **commit 63a855** we implement **step 3-11.**
 
 In this step I've modified the existing index and and view tests to explicitly send a GET, watched them fail, and then made suitable repairs to the controller so the tests pass.  I think it's fairly important to lock-down the controller methods a bit, so that they only respond to very specific http verbs.
+
+
+Starting with **commit 020658** we implement **step 3-12.**
+
+This step was inspired by the fact that all my tests were green, but when I attempted to edit a real record manually, the app would create a new record instead of updating an existing record.
+
+This illustrates an important principal.  Tests are great, but they have to be good tests.  In this particular case, my test was subtly doing some of the work of the controller.  The test would therefore pass, but the controller when left to its own devices, would fail.  As an exercise for the student, see if you can examine the diffs and find the bug.
+
+While figuring this out I also encountered an intricate issue involving html forms, browsers, standards, and http verbs.  This issue had escaped my prior notice and so I had to take a closer look.
+
+As you may know, http clients send requests to http servers.  These requests can use any one of several http "verbs" such as GET, POST, PUT, and DELETE.  This seems easy enough, but a few wrinkles exist to impede this ideal:
+
+* Apparently the specs for older HTML and XHTML only support GET and POST.
+
+* HTML 5 used to support PUT and DELETE, but no longer do so.
+
+* There's widespread difference in support between the various browsers and their versions. (Surprise! Surprise!)
+
+* There's an ideal usage pattern from REST, that can't actually be implemented without contortions, given the other wrinkles.  
+
+* CakePHP has its own Byzantine method of determining which verb to use and how to "emulate" the verbs it cannot/will not deal with.
+
+This is a real can of worms but fortunately we can sidestep-it with a few basic principals.
+
+* The controller methods shall adhere to the REST ideals.  For example, the add method will respond to POST in order to create new records, and the edit method will respond to GET and then PUT in order to retrieve then update existing records.
+
+* The lowest common denominator that we can reliably rely upon is that everybody supports GET and POST.
+
+* CakePHP implements a workaround for PUT and DELETE whereby the forms it creates officially use POST, but contain a hidden field which specifies PUT or DELETE.  In this way, Cake can emulate these methods.
+
+This will work.  A minor drawback is that inspection of the web traffic will show POST where PUT or DELETE would otherwise be expected.
+
+
+For more insight into this issue see [this article on stackoverflow](http://stackoverflow.com/questions/165779/are-the-put-delete-head-etc-methods-available-in-most-web-browsers).
+ 
+
+ 

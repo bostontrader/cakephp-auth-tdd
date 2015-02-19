@@ -36,24 +36,23 @@ class UsersControllerTest extends ControllerTestCase {
 		$this->assertEqual($input->checked, ($fixtureRecord['is_admin']?"checked":false));
 	}
 
-	public function testEditPOST() {
+	public function testEditPUT() {
 
 		$data = array(
 			'User' => array(
-				'id' => 1,
 				'username' => 'hendrix',
 				'is_active' => 1,
 				'is_admin' => 1
 			)
 		);
-		$result = $this->testAction('/users/edit/1', array('data' => $data, 'method' => 'POST'));
+		$result = $this->testAction('/users/edit/1', array('data' => $data, 'return' => 'view', 'method' => 'PUT'));
 		$changedRecord = $this->controller->User->findById(1);
 		$this->assertEqual($data['User']['username'],  $changedRecord['User']['username']);
 		$this->assertEqual($data['User']['is_active'], $changedRecord['User']['is_active']);
 		$this->assertEqual($data['User']['is_admin'],  $changedRecord['User']['is_admin']);
 	}
 
-	public function testIndex() {
+	public function testIndexGET() {
 		$result = $this->testAction('/users/index', array('return' => 'view', 'method' => 'GET'));
 		$html = str_get_html($result);
 
@@ -96,7 +95,7 @@ class UsersControllerTest extends ControllerTestCase {
 
 	}
 
-	public function testView() {
+	public function testViewGET() {
 		// This test will look for a user with an id=1.  The ids
 		// are assigned using an autoincrement field that starts with 1.
 		// The array of user fixture records use zero-based indexing.

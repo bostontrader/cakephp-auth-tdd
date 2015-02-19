@@ -3,10 +3,11 @@ App::uses('AppController', 'Controller');
 class UsersController extends AppController {
 
 	public function edit($id = null) {
-		if ($this->request->is(array('POST'))) {
-			$this->User->save($this->request->data);
+		if ($this->request->is(array('PUT'))) {
+			$this->User->id = $id;
+			$result = $this->User->save($this->request->data);
 		}
-		else {
+		else if ($this->request->is(array('GET'))){
 			$this->request->data = $this->User->findById($id);
 		}
 	}
