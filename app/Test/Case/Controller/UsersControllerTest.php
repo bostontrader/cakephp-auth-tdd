@@ -33,6 +33,22 @@ class UsersControllerTest extends ControllerTestCase {
 		$this->assertEqual($input->checked, false);
 	}
 
+	public function testAddPOST() {
+		$data = array(
+			'User' => array(
+					'username' => 'hendrix',
+					'is_active' => 1,
+					'is_admin' => 1
+			)
+		);
+		$result = $this->testAction('/users/add', array('data' => $data, 'return' => 'view', 'method' => 'POST'));
+		$newRecordId = $this->controller->User->id;
+		$newRecord = $this->controller->User->findById($newRecordId);
+		$this->assertEqual($data['User']['username'],  $newRecord['User']['username']);
+		$this->assertEqual($data['User']['is_active'], $newRecord['User']['is_active']);
+		$this->assertEqual($data['User']['is_admin'],  $newRecord['User']['is_admin']);
+	}
+
 	public function testEditGET() {
 
 		$result = $this->testAction('/users/edit/1', array('return' => 'view', 'method' => 'GET'));

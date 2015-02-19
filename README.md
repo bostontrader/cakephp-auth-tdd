@@ -392,5 +392,9 @@ Recall that with the **editGET** test, we looked for particular entry fields on 
 As usual there will be no errors, exceptions, validations, or flash-messages to fool with, at this time.
 
 
+Starting with **commit 8c05b7** we implement **step 3-14.**
+
+Now let's implement the **addPOST** test.  Similarly with **editPOST**, we'll invent a new record, **POST** it, read the newly created record, and compare to what we expect.  In this case, we'll have to figure out what the new record number is, in order to read it.  But I think that can't be too difficult.
+
 
  
