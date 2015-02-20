@@ -49,6 +49,13 @@ class UsersControllerTest extends ControllerTestCase {
 		$this->assertEqual($data['User']['is_admin'],  $newRecord['User']['is_admin']);
 	}
 
+	public function testDelete() {
+		$result = $this->testAction('/users/delete/1', array('method' => 'DELETE'));
+		$this->assertEqual($result, true);
+		$deletedRecord = $this->controller->User->findById(1);
+		$this->assertEqual(count($deletedRecord), 0);
+	}
+
 	public function testEditGET() {
 
 		$result = $this->testAction('/users/edit/1', array('return' => 'view', 'method' => 'GET'));

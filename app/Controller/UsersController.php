@@ -10,6 +10,13 @@ class UsersController extends AppController {
 		}
 	}
 
+	public function delete($id = null) {
+		$this->autoRender = false;
+		if ($this->request->is('DELETE')) {
+			return $this->User->delete($id);
+		}
+	}
+
 	public function edit($id = null) {
 		if ($this->request->is(array('PUT'))) {
 			$this->User->id = $id;

@@ -397,4 +397,10 @@ Starting with **commit 8c05b7** we implement **step 3-14.**
 Now let's implement the **addPOST** test.  Similarly with **editPOST**, we'll invent a new record, **POST** it, read the newly created record, and compare to what we expect.  In this case, we'll have to figure out what the new record number is, in order to read it.  But I think that can't be too difficult.
 
 
- 
+Starting with **commit bbd57f** we implement **step 3-15.**
+
+Now it's time to figure out how to delete a record.  I think a URL like /users/delete/1 would be a reasonable starting point. The **delete** method in the controller should only respond to a **DELETE** request.  This brings up the same issue we had with edit in that we can't reliably deal with a **DELETE** request without playing some tricks.
+
+Recall that our purpose here is to do unit testing of the controller.  We want to avoid trying to do integration testing to examine how a larger work-flow might function.  So for example, we're not going to try to put a link to delete in some form or fool with javascript or any of that.
+
+So let's create **testDelete**.  No need to call it testDeleteDELETE because there's only one verb that the **delete** method will ever respond to.  In this test we'll delete a record and then attempt to read it back.
