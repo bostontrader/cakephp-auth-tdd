@@ -404,3 +404,20 @@ Now it's time to figure out how to delete a record.  I think a URL like /users/d
 Recall that our purpose here is to do unit testing of the controller.  We want to avoid trying to do integration testing to examine how a larger work-flow might function.  So for example, we're not going to try to put a link to delete in some form or fool with javascript or any of that.
 
 So let's create **testDelete**.  No need to call it testDeleteDELETE because there's only one verb that the **delete** method will ever respond to.  In this test we'll delete a record and then attempt to read it back.
+
+
+Starting with **commit 39cda1** we implement **step 3-16.**
+
+I want to be careful that the controller only responds to specific verbs.  Otherwise do nothing.  But what would "do nothing" even mean?  Return null?  Render a blank screen?  Redirect somewhere?  This is a rather slippery idea.  The controller code as it is now, attempts to detect certain verbs that it is specifically designed to react to.  However, if a controller method is presented with a verb that it's not designed to react to, what happens then?  Well, after falling through whatever chain of if-else is present, control will emerge from the end, apparently doing "nothing".  But "do nothing" in this context means to let CakePHP perform whatever default behavior it implements.  This will most likely involve the rendering of a view, and this is certainly not what I'd consider "do nothing."  So in this step let's tighten the screws on this.
+
+As usual, wrinkles apply.  Sometimes Cake will by default render views and sometimes it will not.  My cursory examination of this was not sufficient to reliably understand why this is.  So instead of crossing our fingers and hoping for good luck in relying upon murky default behavior, perhaps it's better to explicitly order some behavior.
+
+So here's the plan:
+
+* Each of the controller methods to protect will use a chain of if-else blocks to specifically detect verbs that they should respond to.
+
+* The final else at the bottom will catch bad verbs.  If so, the method will $this-autoRender=false and will simply return false.
+
+In this way, all verbs on all methods will return false without doing any rendering, redirecting, or anything else, unless, said verb is specifically chosen for response.
+
+Another wrinkle to think about is that although it's easy enough to create tests for specific conditions that we encounter in ordinary usage, it's much more difficult to build a convincing test that will rule out all error conditions.  For example, our tests will specifically look for edit GET and edit PUT, but how about edit DELETE or edit POST or edit HEAD or any of the other innumerable possibilities?  At this point, I'll just brush that under the table by only creating a single test for a single bad verb, for each of the controller methods, to test that the "no response" response is triggered.

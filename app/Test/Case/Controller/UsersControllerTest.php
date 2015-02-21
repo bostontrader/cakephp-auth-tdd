@@ -6,6 +6,12 @@ class UsersControllerTest extends ControllerTestCase {
 
 	public $fixtures = array('app.user');
 
+	// Test for an http verb that the add method should ignore.
+	public function testAddBadVerb() {
+		$result = $this->testAction('/users/add', array('return' => 'view', 'method' => 'DELETE'));
+		$this->assertEqual($result, false);
+	}
+
 	public function testAddGET() {
 
 		$result = $this->testAction('/users/add', array('return' => 'view', 'method' => 'GET'));
@@ -56,6 +62,18 @@ class UsersControllerTest extends ControllerTestCase {
 		$this->assertEqual(count($deletedRecord), 0);
 	}
 
+	// Test for an http verb that the delete method should ignore.
+	public function testDeleteBadVerb() {
+		$result = $this->testAction('/users/delete', array('return' => 'view', 'method' => 'GET'));
+		$this->assertEqual($result, false);
+	}
+
+	// Test for an http verb that the edit method should ignore.
+	public function testEditBadVerb() {
+		$result = $this->testAction('/users/edit', array('return' => 'view', 'method' => 'DELETE'));
+		$this->assertEqual($result, false);
+	}
+
 	public function testEditGET() {
 
 		$result = $this->testAction('/users/edit/1', array('return' => 'view', 'method' => 'GET'));
@@ -102,6 +120,12 @@ class UsersControllerTest extends ControllerTestCase {
 		$this->assertEqual($data['User']['is_admin'],  $changedRecord['User']['is_admin']);
 	}
 
+	// Test for an http verb that the index method should ignore.
+	public function testIndexBadVerb() {
+		$result = $this->testAction('/users/add', array('return' => 'view', 'method' => 'DELETE'));
+		$this->assertEqual($result, false);
+	}
+
 	public function testIndexGET() {
 		$result = $this->testAction('/users/index', array('return' => 'view', 'method' => 'GET'));
 		$html = str_get_html($result);
@@ -143,6 +167,12 @@ class UsersControllerTest extends ControllerTestCase {
 			$this->assertEqual($fixtureRecord['is_admin'],  $htmlColumns[3]->plaintext);
 		}
 
+	}
+
+	// Test for an http verb that the view method should ignore.
+	public function testViewBadVerb() {
+		$result = $this->testAction('/users/add', array('return' => 'view', 'method' => 'DELETE'));
+		$this->assertEqual($result, false);
 	}
 
 	public function testViewGET() {
